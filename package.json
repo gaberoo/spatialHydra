@@ -1,0 +1,28 @@
+{
+  "engines": {
+    "node": "8.5.0"
+  },
+  "name": "spatialhydra",
+  "version": "1.0.0",
+  "description": "Simulate the spatial hydra effect",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "budo src/index.js:bundle.js --live --open",
+    "postinstall": "browserify src/index.js -o bundle.js"
+  },
+  "author": "Gabriel E Leventhal",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/npm/npm.git"
+  },
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "browserify": "^14.4.0",
+    "budo": "^10.0.4",
+    "d3": "^4.10.2",
+    "lodash": "^4.17.4",
+    "probability-distributions": "^0.9.1"
+  }
+}

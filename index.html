@@ -1,0 +1,52 @@
+<html>
+  <head>
+    <title>Spatial Hydra Effect</title>
+  <style>
+    #main {
+      width: 90%;
+      margin: auto;
+      height: 500px;
+    }
+
+    .loader {
+      border: 16px solid #f3f3f3; /* Light grey */
+      border-top: 16px solid #3498db; /* Blue */
+      border-radius: 50%;
+      padding: 10px;
+      width: 120px;
+      height: 120px;
+      animation: spin 2s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+  </head>
+  <body>
+    <form name="parameters" action="#">
+      Number of patches: <input id="m" type="text" value="8" /><br/>
+      Growth rate: <input id="r" type="text" value="1.85" /><br/>
+      Generations: <input id="gen" type="text" value="100" /><br/>
+      Dispersal prob: <input id="d" type="text" value="0.5" /><br/>
+      b1: <input id="b1" type="text" value="0.0027" /><br/>
+      b2: <input id="b2" type="text" value="-0.005" /><br/>
+      y0: <input id="y0" type="text" value="2" /><br/>
+      y1: <input id="y1" type="text" value="2" /><br/>
+      <button id="go" onclick="window.go()">Run</button>
+    </form>
+
+    <div id="main">
+      <div id="progress"></div>
+      <div id="graph"></div>
+    </div>
+
+    <script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/d3/4.10.2/d3.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.min.js"></script>
+    <script src="src/charting.js"></script>
+    <script src="bundle.js"></script>
+
+  </body>
+</html>
