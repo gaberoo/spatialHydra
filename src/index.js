@@ -24,13 +24,13 @@ function binom(n, p, lim = 30.0) {
   } else {
     let mean = n*p;
     if (mean > lim) {
+      // normal approximation to the binomial when the mean is over 'lim'
       let sigma = Math.sqrt(mean*(1-d));
       let x = Math.floor(R.rnorm(mean,sigma));
       x = (x < 0) ? 0 : x;
       x = (x > n) ? n : x;
       return x;
     } else {
-      // console.log([n,p])
       let x = pd.rbinom(1, n, p);
       return x[0];
     }
@@ -45,32 +45,24 @@ function next_generation(n1, n2) {
 }
 
 function disperse(data) {
-  //console.log(d);
   let i = data[0].length-1;
   let N = 0;
   let q = 0;
   for (let j = 0; j < m; ++j) {
-    q = binom(data[j][i],d,30.0);
+    // binomial sampling of how many individuals disperse
+    q = binom(data[j][i],d);
     data[j][i] -= q;
     N += q;
   }
-  //console.log(N);
   if (N > 0) {
+    // redistribute the dispersed individuals
     let dist = pd.sample(_.range(m), N, true);
     _.each(dist, function(j) { data[j][i]++ });
   }
 }
 
-var colors = [
-  '#e41a1c',
-  '#377eb8',
-  '#4daf4a',
-  '#984ea3',
-  '#ff7f00',
-  '#ffff33',
-  '#a65628',
-  '#f781bf'
-];
+var colors = [ '#e41a1c', '#377eb8', '#4daf4a', '#984ea3',
+               '#ff7f00', '#ffff33', '#a65628', '#f781bf' ];
 
 var graphOpts = {
   animation: {
@@ -117,9 +109,7 @@ var go = function() {
       for (let i = 2; i <= gen; i++) {
         x.push(i);
         for (let j = 0; j < m; j++) {
-          // console.log([i, j, data[j][i-1], data[j][i-2]]);
           var n2 = next_generation(data[j][i-1], data[j][i-2]);
-          // console.log(n2);
           data[j][i] = n2;
           // if (n2[0] > 10000) { break; }
         }
@@ -129,7 +119,7 @@ var go = function() {
       let datasets = [];
       for (let j = 0; j < m; j++) {
         datasets[j] = {
-          label: 'Patch ' + j,
+          label: 'Patch ' + (j+1),
           data: data[j].slice(),
           fill: false,
           borderColor: colors[j]
@@ -150,5 +140,6 @@ var go = function() {
     });
   });
 }
+
 window.go = go;
 
